@@ -65,8 +65,6 @@ function update_script() {
   rm kepubify-linux-64bit
   curl -fsSLO https://github.com/pgaskin/kepubify/releases/latest/download/kepubify-linux-64bit &>/dev/null
   chmod +x kepubify-linux-64bit
-  rm /opt/calibre-web/metadata.db
-  wget https://github.com/janeczku/calibre-web/raw/master/library/metadata.db -P /opt/calibre-web
   menu_array=("1" "Enables gdrive as storage backend for your ebooks" OFF \
     "2" "Enables sending emails via a googlemail account without enabling insecure apps" OFF \
     "3" "Enables displaying of additional author infos on the authors page" OFF \
@@ -83,7 +81,7 @@ function update_script() {
 	    line=0
 	  elif [ $i == "gmail" ]; then
 	    line=1
-      elif [ $i == "goodreads" ]; then
+          elif [ $i == "goodreads" ]; then
 	    line=2
 	  elif [ $i == "ldap" ]; then
 	    line=3
@@ -104,8 +102,8 @@ function update_script() {
   CHOICES=$(whiptail --backtitle "Proxmox VE Helper Scripts" --title "CALIBRE-WEB OPTIONS" --separate-output --checklist "Choose Additional Options" 15 125 8 "${menu_array[@]}" 3>&1 1>&2 2>&3)
   spinner &
   SPINNER_PID=$!
+  options=()
   if [ ! -z "$CHOICES" ]; then
-    declare -a options
     for CHOICE in $CHOICES; do
       case "$CHOICE" in
       "1")
